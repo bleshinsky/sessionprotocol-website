@@ -3,15 +3,581 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Started with MSP</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Get Started with MSP - Complete Setup Guide</title>
+    <meta name="description" content="Step-by-step installation guide for MSP and all required tools including Neo4j, Obsidian, and Linear.">
+    
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc66;
+            --dark: #0a0a0a;
+            --dark-lighter: #1a1a1a;
+            --gray: #888;
+            --light: #ccc;
+            --white: #ffffff;
+            --max-width: 1200px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--light);
+            background: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Grid background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* Header styles - reused from index */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            z-index: 1000;
+        }
+        
+        nav {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo svg {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .cta-button {
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+        }
+        
+        /* Main content */
+        .main-content {
+            padding: 8rem 2rem 4rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--white);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .highlight {
+            color: var(--primary);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+        
+        .setup-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .setup-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #444;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: var(--primary);
+        }
+        
+        .tool-badge {
+            display: inline-block;
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+        
+        .requirements {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .requirements li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .requirements li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .warning-box::before {
+            content: '⚠️ ';
+        }
+        
+        .info-box {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .info-box::before {
+            content: '💡 ';
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .secondary-button:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        .external-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .external-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links a {
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDX0E8CR81"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VDX0E8CR81');
+    </script>
 </head>
 <body>
-    <h1>Get Started with MSP</h1>
-    <p>Quick installation guide:</p>
-    <pre><code>git clone https://github.com/bleshinsky/sessionprotocol
-cd sessionprotocol
-.\msp.ps1 start</code></pre>
-    <p><a href="index.html">Back to Home</a></p>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5 L30 10 L30 20 L20 25 L10 20 L10 10 Z" 
+                          fill="none" 
+                          stroke="#00ff88" 
+                          stroke-width="2"/>
+                    <text x="20" y="18" 
+                          font-family="Arial" 
+                          font-size="10" 
+                          font-weight="bold" 
+                          text-anchor="middle" 
+                          fill="#00ff88">MSP</text>
+                </svg>
+                MSP
+            </a>
+            <div class="nav-links">
+                <a href="/#context">Context Engineering</a>
+                <a href="/#features">Features</a>
+                <a href="/docs">Documentation</a>
+                <a href="https://github.com/bleshinsky/sessionprotocol" target="_blank">GitHub</a>
+                <a href="/download" class="cta-button">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1>Get Started with <span class="highlight">MSP</span></h1>
+        <p class="subtitle">Complete installation guide - everything you need is free for personal use</p>
+
+        <div class="info-box">
+            Estimated setup time: 30 minutes. All tools have free versions perfect for MSP.
+        </div>
+
+        <!-- Step 1: PowerShell -->
+        <div class="setup-card">
+            <div class="step-number">1</div>
+            <h2>Install PowerShell 7+ (if needed)</h2>
+            <span class="tool-badge">Free</span>
+            <span class="tool-badge">Cross-platform</span>
+            
+            <p>MSP requires PowerShell 7.0 or higher. Check your version:</p>
+            <div class="code-block">
+                <code>$PSVersionTable.PSVersion</code>
+            </div>
+            
+            <p>If you need to install or update:</p>
+            <h3>Windows</h3>
+            <div class="code-block">
+                <code>winget install Microsoft.PowerShell</code>
+            </div>
+            
+            <h3>macOS</h3>
+            <div class="code-block">
+                <code>brew install powershell/tap/powershell</code>
+            </div>
+            
+            <h3>Linux</h3>
+            <p>Visit <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux" class="external-link" target="_blank">Microsoft's Linux installation guide</a></p>
+        </div>
+
+        <!-- Step 2: Neo4j -->
+        <div class="setup-card">
+            <div class="step-number">2</div>
+            <h2>Install Neo4j Desktop</h2>
+            <span class="tool-badge">Free for personal use</span>
+            <span class="tool-badge">No credit card required</span>
+            
+            <p>Neo4j is a graph database that stores your project's knowledge graph.</p>
+            
+            <ol>
+                <li>Visit <a href="https://neo4j.com/download/" class="external-link" target="_blank">neo4j.com/download</a></li>
+                <li>Click "Download Neo4j Desktop"</li>
+                <li>Fill the form (use personal email for free version)</li>
+                <li>You'll receive an activation key via email</li>
+                <li>Install and activate with your key</li>
+            </ol>
+            
+            <h3>First-time Neo4j Setup:</h3>
+            <ol>
+                <li>Create a new project called "MSP"</li>
+                <li>Add a local DBMS (database)</li>
+                <li>Set password (remember this for MSP config)</li>
+                <li>Start the database</li>
+            </ol>
+            
+            <div class="info-box">
+                Default connection: bolt://localhost:7687
+            </div>
+        </div>
+
+        <!-- Step 3: Obsidian -->
+        <div class="setup-card">
+            <div class="step-number">3</div>
+            <h2>Install Obsidian</h2>
+            <span class="tool-badge">Free for personal use</span>
+            <span class="tool-badge">No account required</span>
+            
+            <p>Obsidian is a markdown-based knowledge management tool.</p>
+            
+            <ol>
+                <li>Visit <a href="https://obsidian.md/download" class="external-link" target="_blank">obsidian.md/download</a></li>
+                <li>Download for your platform</li>
+                <li>Install and launch Obsidian</li>
+                <li>Create a new vault called "MSP-Notes"</li>
+                <li>Remember the vault location (you'll need this path)</li>
+            </ol>
+            
+            <h3>Recommended Obsidian Settings:</h3>
+            <ul class="requirements">
+                <li>Enable "Daily notes" plugin</li>
+                <li>Set daily note format: YYYY-MM-DD</li>
+                <li>Create folders: /daily, /decisions, /sessions</li>
+            </ul>
+        </div>
+
+        <!-- Step 4: Linear -->
+        <div class="setup-card">
+            <div class="step-number">4</div>
+            <h2>Create Linear Account</h2>
+            <span class="tool-badge">Free tier available</span>
+            <span class="tool-badge">No credit card required</span>
+            
+            <p>Linear is a modern project management tool for tracking tasks.</p>
+            
+            <ol>
+                <li>Visit <a href="https://linear.app" class="external-link" target="_blank">linear.app</a></li>
+                <li>Click "Get Started" (free)</li>
+                <li>Sign up with email or Google</li>
+                <li>Create a workspace (e.g., "Personal Projects")</li>
+                <li>Create a team (e.g., "Development")</li>
+            </ol>
+            
+            <h3>Get your API key:</h3>
+            <ol>
+                <li>Go to Settings → API → Personal API keys</li>
+                <li>Create new key named "MSP"</li>
+                <li>Copy and save the key (shown only once!)</li>
+            </ol>
+            
+            <div class="warning-box">
+                Save your Linear API key securely - you cannot view it again!
+            </div>
+        </div>
+
+        <!-- Step 5: MSP Installation -->
+        <div class="setup-card">
+            <div class="step-number">5</div>
+            <h2>Install MSP</h2>
+            <span class="tool-badge">Open Source</span>
+            <span class="tool-badge">MIT License</span>
+            
+            <p>Now that all prerequisites are installed, let's set up MSP:</p>
+            
+            <div class="code-block">
+                <code># Clone the repository<br>
+git clone https://github.com/bleshinsky/sessionprotocol.git<br>
+cd sessionprotocol<br><br>
+# Run setup script<br>
+.\scripts\setup-msp.ps1</code>
+            </div>
+            
+            <h3>Configuration</h3>
+            <p>The setup script will ask for:</p>
+            <ul class="requirements">
+                <li>Neo4j password (from step 2)</li>
+                <li>Obsidian vault path (from step 3)</li>
+                <li>Linear API key (from step 4)</li>
+            </ul>
+        </div>
+
+        <!-- Step 6: Verify -->
+        <div class="setup-card">
+            <div class="step-number">6</div>
+            <h2>Verify Installation</h2>
+            
+            <p>Test that everything is working:</p>
+            
+            <div class="code-block">
+                <code># Run validation<br>
+.\msp.ps1 validate<br><br>
+# Start your first session<br>
+.\msp.ps1 start<br><br>
+# If successful, you'll see:<br>
+# ✅ Neo4j: Connected<br>
+# ✅ Obsidian: Vault found<br>
+# ✅ Linear: API connected<br>
+# 🚀 Session started!</code>
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="setup-card">
+            <h2>🔧 Troubleshooting</h2>
+            
+            <h3>Neo4j won't connect</h3>
+            <ul>
+                <li>Ensure database is running in Neo4j Desktop</li>
+                <li>Check bolt://localhost:7687 is accessible</li>
+                <li>Verify password in config</li>
+            </ul>
+            
+            <h3>Obsidian vault not found</h3>
+            <ul>
+                <li>Use full absolute path to vault</li>
+                <li>On Windows: C:\Users\YourName\Documents\MSP-Notes</li>
+                <li>On Mac: /Users/YourName/Documents/MSP-Notes</li>
+            </ul>
+            
+            <h3>Linear API errors</h3>
+            <ul>
+                <li>Regenerate API key if needed</li>
+                <li>Ensure key has full access permissions</li>
+                <li>Check internet connection</li>
+            </ul>
+        </div>
+
+        <div class="button-group">
+            <a href="https://github.com/bleshinsky/sessionprotocol" class="cta-button">View on GitHub</a>
+            <a href="/docs" class="secondary-button">Read Full Docs</a>
+            <a href="/" class="secondary-button">Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/bleshinsky/sessionprotocol" target="_blank">GitHub</a>
+                <a href="https://twitter.com/msp_framework" target="_blank">Twitter</a>
+                <a href="/blog" target="_blank">Blog</a>
+                <a href="mailto:hello@sessionprotocol.dev">Contact</a>
+            </div>
+            <p class="footer-text">
+                MSP - The Mandatory Session Protocol | Open Source Context Engineering Tool<br>
+                © 2025 MSP Framework. MIT License.
+            </p>
+        </div>
+    </footer>
 </body>
 </html>
