@@ -245,6 +245,19 @@
             content: '💡 ';
         }
         
+        .prd-template {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #444;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #aaa;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
         .button-group {
             display: flex;
             gap: 1rem;
@@ -368,198 +381,228 @@
     <!-- Main Content -->
     <main class="main-content">
         <h1>Get Started with <span class="highlight">MSP</span></h1>
-        <p class="subtitle">Complete installation guide - everything you need is free for personal use</p>
+        <p class="subtitle">Start with a PRD, build your context, never lose knowledge again</p>
 
         <div class="info-box">
-            Estimated setup time: 30 minutes. All tools have free versions perfect for MSP.
+            The MSP workflow: PRD → Linear Project → Knowledge Graph → Context Engineering
         </div>
 
-        <!-- Step 1: PowerShell -->
+        <!-- Step 1: Create PRD -->
         <div class="setup-card">
             <div class="step-number">1</div>
-            <h2>Install PowerShell 7+ (if needed)</h2>
-            <span class="tool-badge">Free</span>
-            <span class="tool-badge">Cross-platform</span>
+            <h2>Create Your Project Requirements Document (PRD)</h2>
+            <span class="tool-badge">Foundation of Context</span>
             
-            <p>MSP requires PowerShell 7.0 or higher. Check your version:</p>
-            <div class="code-block">
-                <code>$PSVersionTable.PSVersion</code>
+            <p>Before any tools, start with a clear PRD. This becomes the root of your knowledge graph.</p>
+            
+            <h3>MSP PRD Template:</h3>
+            <div class="prd-template">
+# Project Name: [Your Project Name]
+
+## Overview
+Brief description of what you're building and why.
+
+## Problem Statement
+What problem does this solve? Who has this problem?
+
+## Goals
+- Primary goal
+- Secondary goals
+- Success metrics
+
+## Technical Decisions
+- Language: [e.g., TypeScript]
+- Framework: [e.g., Next.js]
+- Database: [e.g., PostgreSQL]
+- Architecture: [e.g., Microservices/Monolith]
+
+## Features (MVP)
+1. Feature 1 - Description
+2. Feature 2 - Description
+3. Feature 3 - Description
+
+## Non-Goals
+What this project will NOT do (important for scope).
+
+## Timeline
+- Phase 1: [Description] - [Duration]
+- Phase 2: [Description] - [Duration]
+- Launch: [Target date]
+
+## Dependencies
+- External APIs
+- Third-party services
+- Team dependencies
             </div>
             
-            <p>If you need to install or update:</p>
-            <h3>Windows</h3>
             <div class="code-block">
-                <code>winget install Microsoft.PowerShell</code>
+                <code># Save your PRD in the project root<br>
+echo "# Project PRD" > PRD.md<br>
+# Edit with your favorite editor<br>
+code PRD.md</code>
             </div>
-            
-            <h3>macOS</h3>
-            <div class="code-block">
-                <code>brew install powershell/tap/powershell</code>
-            </div>
-            
-            <h3>Linux</h3>
-            <p>Visit <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux" class="external-link" target="_blank">Microsoft's Linux installation guide</a></p>
         </div>
 
-        <!-- Step 2: Neo4j -->
+        <!-- Step 2: Install Prerequisites -->
         <div class="setup-card">
             <div class="step-number">2</div>
-            <h2>Install Neo4j Desktop</h2>
-            <span class="tool-badge">Free for personal use</span>
-            <span class="tool-badge">No credit card required</span>
+            <h2>Install Prerequisites</h2>
+            <span class="tool-badge">All Free for Personal Use</span>
             
-            <p>Neo4j is a graph database that stores your project's knowledge graph.</p>
+            <h3>PowerShell 7+</h3>
+            <p>Check your version: <code>$PSVersionTable.PSVersion</code></p>
+            <p>Install if needed: <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell" class="external-link" target="_blank">Installation Guide</a></p>
             
+            <h3>Neo4j Desktop</h3>
             <ol>
-                <li>Visit <a href="https://neo4j.com/download/" class="external-link" target="_blank">neo4j.com/download</a></li>
-                <li>Click "Download Neo4j Desktop"</li>
-                <li>Fill the form (use personal email for free version)</li>
-                <li>You'll receive an activation key via email</li>
-                <li>Install and activate with your key</li>
+                <li>Download from <a href="https://neo4j.com/download/" class="external-link" target="_blank">neo4j.com/download</a></li>
+                <li>Use personal email for free version</li>
+                <li>Create project "MSP" with local database</li>
+                <li>Remember your password!</li>
             </ol>
             
-            <h3>First-time Neo4j Setup:</h3>
+            <h3>Obsidian</h3>
             <ol>
-                <li>Create a new project called "MSP"</li>
-                <li>Add a local DBMS (database)</li>
-                <li>Set password (remember this for MSP config)</li>
-                <li>Start the database</li>
+                <li>Download from <a href="https://obsidian.md/download" class="external-link" target="_blank">obsidian.md</a></li>
+                <li>Create vault "MSP-Knowledge"</li>
+                <li>Enable Daily Notes plugin</li>
             </ol>
-            
-            <div class="info-box">
-                Default connection: bolt://localhost:7687
-            </div>
         </div>
 
-        <!-- Step 3: Obsidian -->
+        <!-- Step 3: Linear Setup -->
         <div class="setup-card">
             <div class="step-number">3</div>
-            <h2>Install Obsidian</h2>
-            <span class="tool-badge">Free for personal use</span>
-            <span class="tool-badge">No account required</span>
+            <h2>Set Up Linear with Your PRD</h2>
+            <span class="tool-badge">Free Tier</span>
+            <span class="tool-badge">Project Management</span>
             
-            <p>Obsidian is a markdown-based knowledge management tool.</p>
+            <p>Linear tracks your project execution based on the PRD.</p>
             
+            <h3>Create Linear Account:</h3>
             <ol>
-                <li>Visit <a href="https://obsidian.md/download" class="external-link" target="_blank">obsidian.md/download</a></li>
-                <li>Download for your platform</li>
-                <li>Install and launch Obsidian</li>
-                <li>Create a new vault called "MSP-Notes"</li>
-                <li>Remember the vault location (you'll need this path)</li>
+                <li>Sign up at <a href="https://linear.app" class="external-link" target="_blank">linear.app</a> (free)</li>
+                <li>Create workspace (e.g., "Personal Projects")</li>
+                <li>Create team based on your project name</li>
             </ol>
             
-            <h3>Recommended Obsidian Settings:</h3>
-            <ul class="requirements">
-                <li>Enable "Daily notes" plugin</li>
-                <li>Set daily note format: YYYY-MM-DD</li>
-                <li>Create folders: /daily, /decisions, /sessions</li>
-            </ul>
-        </div>
-
-        <!-- Step 4: Linear -->
-        <div class="setup-card">
-            <div class="step-number">4</div>
-            <h2>Create Linear Account</h2>
-            <span class="tool-badge">Free tier available</span>
-            <span class="tool-badge">No credit card required</span>
-            
-            <p>Linear is a modern project management tool for tracking tasks.</p>
-            
+            <h3>Import PRD Structure to Linear:</h3>
             <ol>
-                <li>Visit <a href="https://linear.app" class="external-link" target="_blank">linear.app</a></li>
-                <li>Click "Get Started" (free)</li>
-                <li>Sign up with email or Google</li>
-                <li>Create a workspace (e.g., "Personal Projects")</li>
-                <li>Create a team (e.g., "Development")</li>
+                <li><strong>Create Project:</strong> Name it after your PRD project</li>
+                <li><strong>Create Milestones:</strong> Based on PRD phases</li>
+                <li><strong>Create Issues:</strong> One per PRD feature</li>
+                <li><strong>Add Labels:</strong> "decision", "blocker", "context"</li>
             </ol>
             
-            <h3>Get your API key:</h3>
+            <h3>Get API Key:</h3>
             <ol>
-                <li>Go to Settings → API → Personal API keys</li>
-                <li>Create new key named "MSP"</li>
-                <li>Copy and save the key (shown only once!)</li>
+                <li>Settings → API → Personal API keys</li>
+                <li>Create key named "MSP"</li>
+                <li>Save it securely!</li>
             </ol>
             
             <div class="warning-box">
-                Save your Linear API key securely - you cannot view it again!
+                Your PRD drives your Linear structure. Each feature becomes an epic, each requirement becomes an issue.
             </div>
         </div>
 
-        <!-- Step 5: MSP Installation -->
+        <!-- Step 4: Install MSP -->
         <div class="setup-card">
-            <div class="step-number">5</div>
+            <div class="step-number">4</div>
             <h2>Install MSP</h2>
-            <span class="tool-badge">Open Source</span>
-            <span class="tool-badge">MIT License</span>
-            
-            <p>Now that all prerequisites are installed, let's set up MSP:</p>
+            <span class="tool-badge">Context Engineering Tool</span>
             
             <div class="code-block">
-                <code># Clone the repository<br>
+                <code># Clone MSP<br>
 git clone https://github.com/bleshinsky/sessionprotocol.git<br>
 cd sessionprotocol<br><br>
-# Run setup script<br>
+# Copy your PRD into the project<br>
+Copy-Item ..\PRD.md .<br><br>
+# Run setup<br>
 .\scripts\setup-msp.ps1</code>
             </div>
             
-            <h3>Configuration</h3>
-            <p>The setup script will ask for:</p>
+            <p>Setup will ask for:</p>
             <ul class="requirements">
-                <li>Neo4j password (from step 2)</li>
-                <li>Obsidian vault path (from step 3)</li>
-                <li>Linear API key (from step 4)</li>
+                <li>Neo4j password</li>
+                <li>Obsidian vault path</li>
+                <li>Linear API key</li>
+                <li>Project name (from PRD)</li>
             </ul>
         </div>
 
-        <!-- Step 6: Verify -->
+        <!-- Step 5: Initialize Project -->
         <div class="setup-card">
-            <div class="step-number">6</div>
-            <h2>Verify Installation</h2>
-            
-            <p>Test that everything is working:</p>
+            <div class="step-number">5</div>
+            <h2>Initialize Your Project Context</h2>
             
             <div class="code-block">
-                <code># Run validation<br>
-.\msp.ps1 validate<br><br>
-# Start your first session<br>
+                <code># Import PRD into knowledge graph<br>
+.\msp.ps1 init --prd PRD.md<br><br>
+# This creates:<br>
+# - Project node in Neo4j<br>
+# - Decision nodes for each technical choice<br>
+# - Feature nodes linked to Linear issues<br>
+# - Timeline nodes for phases</code>
+            </div>
+            
+            <p>MSP will:</p>
+            <ul class="requirements">
+                <li>Parse your PRD</li>
+                <li>Create knowledge graph structure</li>
+                <li>Link to Linear issues</li>
+                <li>Set up Obsidian templates</li>
+            </ul>
+        </div>
+
+        <!-- Step 6: First Session -->
+        <div class="setup-card">
+            <div class="step-number">6</div>
+            <h2>Start Your First Context-Engineered Session</h2>
+            
+            <div class="code-block">
+                <code># Start session<br>
 .\msp.ps1 start<br><br>
-# If successful, you'll see:<br>
-# ✅ Neo4j: Connected<br>
-# ✅ Obsidian: Vault found<br>
-# ✅ Linear: API connected<br>
-# 🚀 Session started!</code>
+# MSP shows:<br>
+# 📊 Project: [From your PRD]<br>
+# 🎯 Current Phase: [From timeline]<br>
+# 📝 Active Features: [From Linear]<br>
+# 💡 Technical Stack: [From decisions]<br><br>
+# Work and track<br>
+.\msp.ps1 update "Set up project structure" 10<br>
+.\msp.ps1 decide "Use feature flags for gradual rollout"<br><br>
+# End session<br>
+.\msp.ps1 end</code>
             </div>
         </div>
 
-        <!-- Troubleshooting -->
+        <!-- Context Engineering Workflow -->
         <div class="setup-card">
-            <h2>🔧 Troubleshooting</h2>
+            <h2>🧠 The Context Engineering Workflow</h2>
             
-            <h3>Neo4j won't connect</h3>
-            <ul>
-                <li>Ensure database is running in Neo4j Desktop</li>
-                <li>Check bolt://localhost:7687 is accessible</li>
-                <li>Verify password in config</li>
-            </ul>
+            <h3>Every Session:</h3>
+            <ol>
+                <li><strong>Start:</strong> Load complete context from PRD + history</li>
+                <li><strong>Work:</strong> Code with full understanding</li>
+                <li><strong>Track:</strong> Update progress in real-time</li>
+                <li><strong>Decide:</strong> Document choices with rationale</li>
+                <li><strong>End:</strong> Everything saved to knowledge graph</li>
+            </ol>
             
-            <h3>Obsidian vault not found</h3>
-            <ul>
-                <li>Use full absolute path to vault</li>
-                <li>On Windows: C:\Users\YourName\Documents\MSP-Notes</li>
-                <li>On Mac: /Users/YourName/Documents/MSP-Notes</li>
-            </ul>
-            
-            <h3>Linear API errors</h3>
-            <ul>
-                <li>Regenerate API key if needed</li>
-                <li>Ensure key has full access permissions</li>
-                <li>Check internet connection</li>
-            </ul>
+            <h3>For AI Assistance:</h3>
+            <div class="code-block">
+                <code># Export complete context<br>
+.\msp.ps1 context --format ai | clip<br><br>
+# Paste into Claude/GPT with:<br>
+# - Full PRD context<br>
+# - All decisions made<br>
+# - Current progress<br>
+# - Active blockers</code>
+            </div>
         </div>
 
         <div class="button-group">
-            <a href="https://github.com/bleshinsky/sessionprotocol" class="cta-button">View on GitHub</a>
-            <a href="/docs" class="secondary-button">Read Full Docs</a>
+            <a href="https://github.com/bleshinsky/sessionprotocol" class="cta-button">Get MSP on GitHub</a>
+            <a href="/docs" class="secondary-button">Read Documentation</a>
             <a href="/" class="secondary-button">Back to Home</a>
         </div>
     </main>
