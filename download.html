@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Started with MSP - Complete Setup Guide</title>
-    <meta name="description" content="Step-by-step installation guide for MSP and all required tools including Neo4j, Obsidian, and Linear.">
+    <title>Get Started - MSP in 5 Minutes</title>
+    <meta name="description" content="Start tracking your development sessions in 5 minutes. No complex setup required.">
     
     <style>
         :root {
@@ -29,10 +29,9 @@
             color: var(--light);
             background: var(--dark);
             line-height: 1.6;
-            overflow-x: hidden;
         }
         
-        /* Grid background pattern */
+        /* Grid background */
         body::before {
             content: '';
             position: fixed;
@@ -48,21 +47,18 @@
             pointer-events: none;
         }
         
-        /* Header styles - reused from index */
+        /* Header */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
             background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 255, 136, 0.2);
-            z-index: 1000;
+            padding: 1rem 0;
         }
         
         nav {
             max-width: var(--max-width);
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -73,55 +69,15 @@
             font-weight: bold;
             color: var(--primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .logo svg {
-            width: 30px;
-            height: 30px;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .cta-button {
-            background: var(--primary);
-            color: var(--dark);
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-        
-        .cta-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
         }
         
         /* Main content */
-        .main-content {
-            padding: 8rem 2rem 4rem;
-            max-width: var(--max-width);
+        .container {
+            max-width: 800px;
             margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
         }
         
         h1 {
@@ -131,15 +87,15 @@
         }
         
         h2 {
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
             color: var(--primary);
-            margin: 2rem 0 1rem;
-            font-size: 1.8rem;
         }
         
         h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
             color: var(--white);
-            margin: 1.5rem 0 1rem;
-            font-size: 1.3rem;
         }
         
         .highlight {
@@ -147,41 +103,22 @@
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--gray);
             margin-bottom: 3rem;
         }
         
-        .setup-card {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-            border-radius: 0.75rem;
+        .big-idea {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid var(--primary);
             padding: 2rem;
-            margin-bottom: 2rem;
-            transition: border-color 0.3s ease;
-        }
-        
-        .setup-card:hover {
-            border-color: var(--primary);
-        }
-        
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: var(--dark);
-            border-radius: 50%;
-            font-weight: bold;
+            margin: 2rem 0;
             font-size: 1.2rem;
-            margin-bottom: 1rem;
         }
         
         .code-block {
             background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #444;
+            border: 1px solid #333;
             border-radius: 0.5rem;
             padding: 1.5rem;
             margin: 1rem 0;
@@ -193,87 +130,89 @@
             color: var(--primary);
         }
         
-        .tool-badge {
-            display: inline-block;
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.85rem;
-            margin-right: 0.5rem;
+        .comment {
+            color: #666;
         }
         
-        .requirements {
-            list-style: none;
-            margin: 1rem 0;
+        .steps {
+            counter-reset: step-counter;
+            margin: 2rem 0;
         }
         
-        .requirements li {
-            padding: 0.5rem 0;
+        .step {
+            counter-increment: step-counter;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary);
+            color: var(--dark);
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .requirements li::before {
-            content: '✓';
-            color: var(--primary);
+            justify-content: center;
             font-weight: bold;
         }
         
-        .warning-box {
-            background: rgba(255, 152, 0, 0.1);
-            border: 1px solid rgba(255, 152, 0, 0.3);
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .option-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .option-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .option-card h3 {
+            margin-top: 0;
+        }
+        
+        .cta-button {
+            background: var(--primary);
+            color: var(--dark);
+            padding: 1rem 2rem;
             border-radius: 0.5rem;
-            padding: 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
             margin: 1rem 0;
+            transition: all 0.3s ease;
         }
         
-        .warning-box::before {
-            content: '⚠️ ';
-        }
-        
-        .info-box {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .info-box::before {
-            content: '💡 ';
-        }
-        
-        .prd-template {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #444;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: #aaa;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
         }
         
         .secondary-button {
             background: transparent;
             color: var(--primary);
             border: 2px solid var(--primary);
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2rem;
             border-radius: 0.5rem;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
             display: inline-block;
+            margin: 1rem 0;
         }
         
         .secondary-button:hover {
@@ -281,346 +220,164 @@
             color: var(--dark);
         }
         
-        .external-link {
-            color: var(--primary);
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .external-link:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-        
-        /* Footer */
         footer {
-            padding: 3rem 2rem;
-            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            margin-top: 5rem;
+            padding: 2rem 0;
+            border-top: 1px solid #333;
             text-align: center;
-        }
-        
-        .footer-content {
-            max-width: var(--max-width);
-            margin: 0 auto;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .social-links a {
             color: var(--gray);
-            transition: color 0.3s ease;
         }
         
-        .social-links a:hover {
-            color: var(--primary);
-        }
-        
-        .footer-text {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .button-group {
-                flex-direction: column;
-            }
+            h1 { font-size: 2rem; }
+            .options-grid { grid-template-columns: 1fr; }
         }
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDX0E8CR81"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-VDX0E8CR81');
-    </script>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <nav>
-            <a href="/" class="logo">
-                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 5 L30 10 L30 20 L20 25 L10 20 L10 10 Z" 
-                          fill="none" 
-                          stroke="#00ff88" 
-                          stroke-width="2"/>
-                    <text x="20" y="18" 
-                          font-family="Arial" 
-                          font-size="10" 
-                          font-weight="bold" 
-                          text-anchor="middle" 
-                          fill="#00ff88">MSP</text>
-                </svg>
-                MSP
-            </a>
-            <div class="nav-links">
-                <a href="/#context">Context Engineering</a>
-                <a href="/#features">Features</a>
-                <a href="/docs">Documentation</a>
-                <a href="https://github.com/bleshinsky/sessionprotocol" target="_blank">GitHub</a>
-                <a href="/download" class="cta-button">Get Started</a>
-            </div>
+            <a href="index.html" class="logo">MSP</a>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <h1>Get Started with <span class="highlight">MSP</span></h1>
-        <p class="subtitle">Start with a PRD, build your context, never lose knowledge again</p>
+    <div class="container">
+        <h1>Start Using <span class="highlight">MSP</span> in 5 Minutes</h1>
+        <p class="subtitle">No complex setup. No new tools to learn. Just better context tracking.</p>
 
-        <div class="info-box">
-            The MSP workflow: PRD → Linear Project → Knowledge Graph → Context Engineering
+        <div class="big-idea">
+            <strong>The Big Idea:</strong> Track your work sessions. Start when you begin. Update as you progress. End when you stop. That's it.
         </div>
 
-        <!-- Step 1: Create PRD -->
-        <div class="setup-card">
-            <div class="step-number">1</div>
-            <h2>Create Your Project Requirements Document (PRD)</h2>
-            <span class="tool-badge">Foundation of Context</span>
-            
-            <p>Before any tools, start with a clear PRD. This becomes the root of your knowledge graph.</p>
-            
-            <h3>MSP PRD Template:</h3>
-            <div class="prd-template">
-# Project Name: [Your Project Name]
-
-## Overview
-Brief description of what you're building and why.
-
-## Problem Statement
-What problem does this solve? Who has this problem?
-
-## Goals
-- Primary goal
-- Secondary goals
-- Success metrics
-
-## Technical Decisions
-- Language: [e.g., TypeScript]
-- Framework: [e.g., Next.js]
-- Database: [e.g., PostgreSQL]
-- Architecture: [e.g., Microservices/Monolith]
-
-## Features (MVP)
-1. Feature 1 - Description
-2. Feature 2 - Description
-3. Feature 3 - Description
-
-## Non-Goals
-What this project will NOT do (important for scope).
-
-## Timeline
-- Phase 1: [Description] - [Duration]
-- Phase 2: [Description] - [Duration]
-- Launch: [Target date]
-
-## Dependencies
-- External APIs
-- Third-party services
-- Team dependencies
+        <h2>Choose Your Setup</h2>
+        
+        <div class="options-grid">
+            <div class="option-card">
+                <h3>🚀 Simple Start</h3>
+                <p><strong>For most developers</strong></p>
+                <p>Just the MSP script. Works with your existing tools. Track sessions in a simple JSON file.</p>
+                <ul>
+                    <li>✓ 5 minute setup</li>
+                    <li>✓ Zero dependencies</li>
+                    <li>✓ Works anywhere</li>
+                </ul>
+                <a href="#simple" class="cta-button">Get Started →</a>
             </div>
             
-            <div class="code-block">
-                <code># Save your PRD in the project root<br>
-echo "# Project PRD" > PRD.md<br>
-# Edit with your favorite editor<br>
-code PRD.md</code>
+            <div class="option-card">
+                <h3>🧠 Pro Stack</h3>
+                <p><strong>For power users</strong></p>
+                <p>Our recommended setup with Neo4j, Obsidian, and Linear for full context engineering.</p>
+                <ul>
+                    <li>✓ Knowledge graph</li>
+                    <li>✓ Note integration</li>
+                    <li>✓ Task tracking</li>
+                </ul>
+                <a href="#pro" class="secondary-button">Advanced Setup →</a>
             </div>
         </div>
 
-        <!-- Step 2: Install Prerequisites -->
-        <div class="setup-card">
-            <div class="step-number">2</div>
-            <h2>Install Prerequisites</h2>
-            <span class="tool-badge">All Free for Personal Use</span>
+        <h2 id="simple">Simple Setup (Recommended)</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <h3>Download the Script</h3>
+                <p>Just one file. That's it.</p>
+                <div class="code-block">
+                    <code><span class="comment"># PowerShell (Windows/Mac/Linux)</span><br>
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/bleshinsky/sessionprotocol/main/msp.ps1" -OutFile "msp.ps1"<br><br>
+<span class="comment"># Or with curl</span><br>
+curl -O https://raw.githubusercontent.com/bleshinsky/sessionprotocol/main/msp.ps1</code>
+                </div>
+            </div>
             
-            <h3>PowerShell 7+</h3>
-            <p>Check your version: <code>$PSVersionTable.PSVersion</code></p>
-            <p>Install if needed: <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell" class="external-link" target="_blank">Installation Guide</a></p>
+            <div class="step">
+                <h3>Start Your First Session</h3>
+                <p>Run this when you start working:</p>
+                <div class="code-block">
+                    <code>.\msp.ps1 start</code>
+                </div>
+                <p>You'll see:</p>
+                <div class="code-block">
+                    <code>🚀 Session started at 09:15 AM<br>
+📊 Project: my-awesome-project<br>
+📍 Last session: Yesterday (2.5 hours)<br>
+🎯 Continue where you left off!</code>
+                </div>
+            </div>
             
-            <h3>Neo4j Desktop</h3>
-            <ol>
-                <li>Download from <a href="https://neo4j.com/download/" class="external-link" target="_blank">neo4j.com/download</a></li>
-                <li>Use personal email for free version</li>
-                <li>Create project "MSP" with local database</li>
-                <li>Remember your password!</li>
-            </ol>
+            <div class="step">
+                <h3>Track Your Progress</h3>
+                <p>Update as you work (this is the mandatory part!):</p>
+                <div class="code-block">
+                    <code><span class="comment"># When you complete something</span><br>
+.\msp.ps1 update "Fixed user authentication bug" 15<br><br>
+<span class="comment"># When you make a decision</span><br>
+.\msp.ps1 decide "Using JWT tokens instead of sessions"<br><br>
+<span class="comment"># When you hit a blocker</span><br>
+.\msp.ps1 blocker "API rate limits need investigation"</code>
+                </div>
+            </div>
             
-            <h3>Obsidian</h3>
-            <ol>
-                <li>Download from <a href="https://obsidian.md/download" class="external-link" target="_blank">obsidian.md</a></li>
-                <li>Create vault "MSP-Knowledge"</li>
-                <li>Enable Daily Notes plugin</li>
-            </ol>
-        </div>
-
-        <!-- Step 3: Linear Setup -->
-        <div class="setup-card">
-            <div class="step-number">3</div>
-            <h2>Set Up Linear with Your PRD</h2>
-            <span class="tool-badge">Free Tier</span>
-            <span class="tool-badge">Project Management</span>
-            
-            <p>Linear tracks your project execution based on the PRD.</p>
-            
-            <h3>Create Linear Account:</h3>
-            <ol>
-                <li>Sign up at <a href="https://linear.app" class="external-link" target="_blank">linear.app</a> (free)</li>
-                <li>Create workspace (e.g., "Personal Projects")</li>
-                <li>Create team based on your project name</li>
-            </ol>
-            
-            <h3>Import PRD Structure to Linear:</h3>
-            <ol>
-                <li><strong>Create Project:</strong> Name it after your PRD project</li>
-                <li><strong>Create Milestones:</strong> Based on PRD phases</li>
-                <li><strong>Create Issues:</strong> One per PRD feature</li>
-                <li><strong>Add Labels:</strong> "decision", "blocker", "context"</li>
-            </ol>
-            
-            <h3>Get API Key:</h3>
-            <ol>
-                <li>Settings → API → Personal API keys</li>
-                <li>Create key named "MSP"</li>
-                <li>Save it securely!</li>
-            </ol>
-            
-            <div class="warning-box">
-                Your PRD drives your Linear structure. Each feature becomes an epic, each requirement becomes an issue.
+            <div class="step">
+                <h3>End Your Session</h3>
+                <p>Before you stop working:</p>
+                <div class="code-block">
+                    <code>.\msp.ps1 end</code>
+                </div>
+                <p>MSP saves your context and shows a summary:</p>
+                <div class="code-block">
+                    <code>✅ Session complete!<br>
+⏱️ Duration: 3.5 hours<br>
+📈 Progress: 15% → 32% (+17%)<br>
+💡 Decisions made: 2<br>
+🚨 Blockers: 1<br>
+📝 Context saved to .msp/sessions/2025-07-11.json</code>
+                </div>
             </div>
         </div>
 
-        <!-- Step 4: Install MSP -->
-        <div class="setup-card">
-            <div class="step-number">4</div>
-            <h2>Install MSP</h2>
-            <span class="tool-badge">Context Engineering Tool</span>
-            
-            <div class="code-block">
-                <code># Clone MSP<br>
-git clone https://github.com/bleshinsky/sessionprotocol.git<br>
-cd sessionprotocol<br><br>
-# Copy your PRD into the project<br>
-Copy-Item ..\PRD.md .<br><br>
-# Run setup<br>
-.\scripts\setup-msp.ps1</code>
-            </div>
-            
-            <p>Setup will ask for:</p>
-            <ul class="requirements">
-                <li>Neo4j password</li>
-                <li>Obsidian vault path</li>
-                <li>Linear API key</li>
-                <li>Project name (from PRD)</li>
-            </ul>
+        <h2>That's It!</h2>
+        <p>Your context is now saved. Tomorrow morning, just run <code>msp start</code> and you're back where you left off.</p>
+
+        <h3>Where It Saves</h3>
+        <div class="code-block">
+            <code>your-project/<br>
+├── .msp/<br>
+│   ├── state.json      <span class="comment"># Current state</span><br>
+│   └── sessions/       <span class="comment"># Session history</span><br>
+└── your-code/</code>
         </div>
 
-        <!-- Step 5: Initialize Project -->
-        <div class="setup-card">
-            <div class="step-number">5</div>
-            <h2>Initialize Your Project Context</h2>
-            
-            <div class="code-block">
-                <code># Import PRD into knowledge graph<br>
-.\msp.ps1 init --prd PRD.md<br><br>
-# This creates:<br>
-# - Project node in Neo4j<br>
-# - Decision nodes for each technical choice<br>
-# - Feature nodes linked to Linear issues<br>
-# - Timeline nodes for phases</code>
-            </div>
-            
-            <p>MSP will:</p>
-            <ul class="requirements">
-                <li>Parse your PRD</li>
-                <li>Create knowledge graph structure</li>
-                <li>Link to Linear issues</li>
-                <li>Set up Obsidian templates</li>
-            </ul>
+        <h3>Works With Everything</h3>
+        <p>MSP doesn't replace your tools. It works alongside:</p>
+        <ul>
+            <li>✓ Any IDE or editor</li>
+            <li>✓ Any version control (Git, SVN, etc.)</li>
+            <li>✓ Any task tracker (Jira, Trello, Linear, etc.)</li>
+            <li>✓ Any notes app (or just .txt files!)</li>
+        </ul>
+
+        <div class="big-idea">
+            <strong>Pro Tip:</strong> Add <code>msp start</code> to your morning routine. Make it as automatic as opening your editor.
         </div>
 
-        <!-- Step 6: First Session -->
-        <div class="setup-card">
-            <div class="step-number">6</div>
-            <h2>Start Your First Context-Engineered Session</h2>
-            
-            <div class="code-block">
-                <code># Start session<br>
-.\msp.ps1 start<br><br>
-# MSP shows:<br>
-# 📊 Project: [From your PRD]<br>
-# 🎯 Current Phase: [From timeline]<br>
-# 📝 Active Features: [From Linear]<br>
-# 💡 Technical Stack: [From decisions]<br><br>
-# Work and track<br>
-.\msp.ps1 update "Set up project structure" 10<br>
-.\msp.ps1 decide "Use feature flags for gradual rollout"<br><br>
-# End session<br>
-.\msp.ps1 end</code>
-            </div>
-        </div>
+        <h2 id="pro">Advanced: The Pro Stack</h2>
+        <p>Want the full context engineering experience? We use Neo4j + Obsidian + Linear. It's powerful but requires setup.</p>
+        
+        <a href="pro-setup.html" class="secondary-button">View Pro Setup Guide →</a>
 
-        <!-- Context Engineering Workflow -->
-        <div class="setup-card">
-            <h2>🧠 The Context Engineering Workflow</h2>
-            
-            <h3>Every Session:</h3>
-            <ol>
-                <li><strong>Start:</strong> Load complete context from PRD + history</li>
-                <li><strong>Work:</strong> Code with full understanding</li>
-                <li><strong>Track:</strong> Update progress in real-time</li>
-                <li><strong>Decide:</strong> Document choices with rationale</li>
-                <li><strong>End:</strong> Everything saved to knowledge graph</li>
-            </ol>
-            
-            <h3>For AI Assistance:</h3>
-            <div class="code-block">
-                <code># Export complete context<br>
-.\msp.ps1 context --format ai | clip<br><br>
-# Paste into Claude/GPT with:<br>
-# - Full PRD context<br>
-# - All decisions made<br>
-# - Current progress<br>
-# - Active blockers</code>
-            </div>
-        </div>
+        <h2>Join the Community</h2>
+        <p>Questions? Ideas? Stories to share?</p>
+        <ul>
+            <li>📧 Email: hello@sessionprotocol.dev</li>
+            <li>💻 GitHub: <a href="https://github.com/bleshinsky/sessionprotocol" style="color: var(--primary);">github.com/bleshinsky/sessionprotocol</a></li>
+            <li>🐦 Twitter: @msp_framework</li>
+        </ul>
 
-        <div class="button-group">
-            <a href="https://github.com/bleshinsky/sessionprotocol" class="cta-button">Get MSP on GitHub</a>
-            <a href="/docs" class="secondary-button">Read Documentation</a>
-            <a href="/" class="secondary-button">Back to Home</a>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <a href="https://github.com/bleshinsky/sessionprotocol" target="_blank">GitHub</a>
-                <a href="https://twitter.com/msp_framework" target="_blank">Twitter</a>
-                <a href="/blog" target="_blank">Blog</a>
-                <a href="mailto:hello@sessionprotocol.dev">Contact</a>
-            </div>
-            <p class="footer-text">
-                MSP - The Mandatory Session Protocol | Open Source Context Engineering Tool<br>
-                © 2025 MSP Framework. MIT License.
-            </p>
-        </div>
-    </footer>
+        <footer>
+            <p>MSP - Keep it simple. Make it mandatory. Never lose context again.</p>
+        </footer>
+    </div>
 </body>
 </html>
