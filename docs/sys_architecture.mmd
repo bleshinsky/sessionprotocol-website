@@ -1,0 +1,35 @@
+graph TB
+    subgraph "Developer Workstation"
+        CLI[PowerShell CLI<br/>msp.ps1]
+        LSM[Local State Manager]
+    end
+    
+    subgraph "Tool Integrations"
+        NEO[Neo4j<br/>Knowledge Graph]
+        OBS[Obsidian<br/>Documentation]
+        LIN[Linear<br/>Project Management]
+        GIT[GitHub<br/>Version Control]
+    end
+    
+    subgraph "Web Platform"
+        WEB[Web Dashboard<br/>sessionprotocol.dev]
+        API[REST/GraphQL API]
+        WS[WebSocket Server]
+    end
+    
+    CLI -->|Commands| LSM
+    LSM -->|Graph Queries| NEO
+    LSM -->|File Operations| OBS
+    LSM -->|API Calls| LIN
+    LSM -->|Git Commands| GIT
+    
+    LSM -.->|Real-time Sync| WS
+    WS -.-> WEB
+    API --> WEB
+    
+    NEO -.->|Query Results| API
+    LIN -.->|Webhooks| API
+    
+    style CLI fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style WEB fill:#50C878,stroke:#3A9B5C,color:#fff
+    style NEO fill:#FF6B6B,stroke:#CC5555,color:#fff

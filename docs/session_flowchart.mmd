@@ -1,0 +1,41 @@
+flowchart LR
+    subgraph "Session Start"
+        S1[Developer runs<br/>'msp.ps1 start']
+        S2[Validate Prerequisites]
+        S3[Initialize Session ID]
+        S4[Create Session Nodes]
+    end
+    
+    subgraph "Active Session"
+        U1[Track Progress<br/>'msp.ps1 update']
+        U2[Log Decisions]
+        U3[Sync to Tools]
+        U4[Real-time Updates]
+    end
+    
+    subgraph "Session End"
+        E1[Run 'msp.ps1 end']
+        E2[Generate Reports]
+        E3[Update Daily Note]
+        E4[Archive Session]
+    end
+    
+    S1 --> S2
+    S2 -->|Valid| S3
+    S2 -->|Invalid| ERR[Show Errors]
+    S3 --> S4
+    S4 --> U1
+    
+    U1 --> U2
+    U2 --> U3
+    U3 --> U4
+    U4 -->|Continue Working| U1
+    U4 -->|Done| E1
+    
+    E1 --> E2
+    E2 --> E3
+    E3 --> E4
+    
+    style S1 fill:#4CAF50,stroke:#388E3C,color:#fff
+    style U1 fill:#2196F3,stroke:#1976D2,color:#fff
+    style E1 fill:#FF9800,stroke:#F57C00,color:#fff

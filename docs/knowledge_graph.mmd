@@ -1,0 +1,38 @@
+graph TD
+    subgraph "Core Entities"
+        SESSION[Session<br/>id, start, end, status]
+        DEV[Developer<br/>name, email, team]
+        PROJ[Project<br/>name, repo, deadline]
+    end
+    
+    subgraph "Work Artifacts"
+        TASK[Task<br/>title, description, status]
+        DEC[Decision<br/>what, why, when]
+        PROG[Progress<br/>percentage, timestamp]
+        NOTE[Note<br/>content, tags]
+    end
+    
+    subgraph "External References"
+        LINEAR[Linear Issue<br/>id, url, status]
+        COMMIT[Git Commit<br/>hash, message]
+        DOC[Obsidian Doc<br/>path, title]
+    end
+    
+    DEV -->|STARTS| SESSION
+    SESSION -->|BELONGS_TO| PROJ
+    SESSION -->|CONTAINS| TASK
+    SESSION -->|CONTAINS| DEC
+    SESSION -->|TRACKS| PROG
+    
+    TASK -->|RELATES_TO| LINEAR
+    TASK -->|IMPLEMENTED_BY| COMMIT
+    DEC -->|DOCUMENTED_IN| DOC
+    SESSION -->|SUMMARIZED_IN| NOTE
+    
+    TASK -->|DEPENDS_ON| TASK
+    DEC -->|INFLUENCES| DEC
+    
+    style SESSION fill:#9C27B0,stroke:#7B1FA2,color:#fff
+    style DEV fill:#3F51B5,stroke:#303F9F,color:#fff
+    style TASK fill:#009688,stroke:#00796B,color:#fff
+    style DEC fill:#FFC107,stroke:#FFA000,color:#000
